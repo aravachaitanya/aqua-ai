@@ -34,5 +34,3 @@ jobs:
       
     - name: Publish to GitHub Packages Apache Maven
       run: mvn deploy --file aqua-admin/pom.xml
-      env:
-        GITHUB_TOKEN: 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
