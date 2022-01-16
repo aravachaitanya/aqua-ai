@@ -8,7 +8,6 @@ import java.util.Optional;
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,9 +62,10 @@ public class AquaAdminController {
 			@ApiResponse(code = 404, message = "Customer Not Found", response = ErrorMessage.class),
 			@ApiResponse(code = 500, message = "Internel Server Error", response = ErrorMessage.class)
 	})
-	public ResponseEntity<Customer> saveCustomer(@Valid @NotBlank @RequestBody Customer customer) throws AquaAdminException {
+	public ResponseEntity<Customer> saveCustomer(@Valid @RequestBody Customer customer) throws AquaAdminException {
 		
 		LOGGER.info("Before saving customer");
+		
 		Customer savedCustomer = aquaAdminService.saveCustomer(customer);
 		
 		LOGGER.info("Saved following customer:: " + savedCustomer.getCustomerId());

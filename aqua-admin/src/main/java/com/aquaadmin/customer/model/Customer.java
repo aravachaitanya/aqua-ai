@@ -4,12 +4,16 @@
 package com.aquaadmin.customer.model;
 
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
@@ -32,7 +36,7 @@ public class Customer {
 	
 	@Id
 	@Column(name="customer_id")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long customerId;
 
 	@Column(name="customer_name")
@@ -43,8 +47,8 @@ public class Customer {
 	@NotBlank(message = "customer emailId is not valid")
 	private String emailId;
 	
-	@Column(name="location_number")
-	private int locationNumber;
+	@Column(name="phone_number")
+	private Long PhoneNumber;
 	
 	@Column(name="customer_type")
 	@NotBlank(message = "customer type is not valid")
@@ -58,4 +62,12 @@ public class Customer {
 	
 	@Column(name="start_date")
 	private Date startDate; 
+	
+	@Column(name="location_numbers")
+	private int locationNumbers;
+	
+	@OneToMany(targetEntity = AquaLocation.class, mappedBy = "customer", fetch = FetchType.EAGER,
+	            cascade = CascadeType.ALL)
+	private Set<AquaLocation> aquaLocations;
+	
 }
