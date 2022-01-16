@@ -33,6 +33,6 @@ jobs:
       run: ls -a
       
     - name: Publish to GitHub Packages Apache Maven
-      run: mvn deploy --file /home/runner/work/aqua-ai/aqua-ai/aqua-admin/target/aqua-admin-0.0.1-SNAPSHOT.jar
+      run: mvn deploy --file aqua-admin/pom.xml
       env:
         GITHUB_TOKEN: ${{ github.token }}  
