@@ -31,8 +31,3 @@ jobs:
 
     - name: List the current directory
       run: ls -a
-      
-    - name: Publish to GitHub Packages Apache Maven
-      run: mvn deploy --file aqua-admin/pom.xml
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
