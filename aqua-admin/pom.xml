@@ -74,12 +74,12 @@
 		<repository>
 			<id>github</id>
 			<name>Chaitanya Arava</name>
-			<url>https://github.com/carava07/aqua-ai/</url>
+			<url>https://github.com/carava07/aqua-ai/com/aquaadmin/aqua-admin/</url>
 		</repository>
 		 <snapshotRepository>
             <id>Github Repository</id>
             <name>Maven2 Snapshot Repository</name>
-            <url>https://github.com/carava07/aqua-ai/</url>
+            <url>https://github.com/carava07/aqua-ai/com/aquaadmin/aqua-admin/</url>
         </snapshotRepository>
 	</distributionManagement>
 
