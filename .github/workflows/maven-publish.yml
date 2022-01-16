@@ -4,7 +4,7 @@
 name: Maven Package
 
 on:
-  release:
+  push:
     branches:
       - master
 
@@ -27,8 +27,16 @@ jobs:
         settings-path: ${{ github.workspace }} # location for the settings.xml file
 
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn -B verify --file aqua-admin/pom.xml
 
+    - name: List the current directory
+      run: ls -a
+      
+    - name: What is the target directory
+      run: 
+            cd target
+            ls -a
+      
     - name: Publish to GitHub Packages Apache Maven
       run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
       env:
