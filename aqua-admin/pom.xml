@@ -71,6 +71,14 @@
 		</dependency>
 	</dependencies>
 
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<name>Chaitanya Arava</name>
+			<url>https://github.com/carava07/aqua-ai</url>
+		</repository>
+	</distributionManagement>
+
 	<build>
 		<plugins>
 			<plugin>
