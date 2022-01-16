@@ -87,7 +87,7 @@
         <connection>scm:git:ssh://github.com/carava07/aqua-ai.git</connection>
         <developerConnection>scm:git:ssh://github.com/carava07/aqua-ai.git
         </developerConnection>
-        <url>https://github.com/carava07/aqua-ai/</url>
+        <url>https://github.com/carava07/aqua-ai/tree/master/aqua-admin/</url>
         <tag>github-aqua-admin</tag>
     </scm>
 
