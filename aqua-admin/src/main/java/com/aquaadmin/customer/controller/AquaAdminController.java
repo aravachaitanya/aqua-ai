@@ -33,10 +33,6 @@ import io.swagger.annotations.ApiResponses;
  * @author chaitanyaarava
  *
  */
-/**
- * @author chaitanyaarava
- *
- */
 @RestController
 @Validated
 public class AquaAdminController {
@@ -50,6 +46,8 @@ public class AquaAdminController {
 	}
 
 	/**
+	 * This method is to save customer data into user_admin and user_location tables.
+	 * 
 	 * @param customer
 	 * @return
 	 * @throws AquaAdminException
@@ -77,6 +75,7 @@ public class AquaAdminController {
 
 	
 	/**
+	 * This methos will fetch all the customer data from user_admin and user_location tables.
 	 * @param customerId
 	 * @return
 	 */

@@ -22,6 +22,7 @@ public class AquaAdminException extends RuntimeException {
 		this.httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
 	}
 	
+	
 	public AquaAdminException(String message, HttpStatus httpStatus) {
 		super(message);
 		this.httpStatus = httpStatus;
