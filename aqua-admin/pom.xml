@@ -74,19 +74,31 @@
 		<repository>
 			<id>github</id>
 			<name>Chaitanya Arava</name>
-			<url>https://maven.pkg.github.com/carava07/aqua-ai/tree/master/aqua-admin</url>
+			<url>file://git/carava07/aqua-admin </url>
 		</repository>
+		 <snapshotRepository>
+            <id>Github Repository</id>
+            <name>Maven2 Snapshot Repository</name>
+            <url>file://home/runner/work/aqua-ai/aqua-admin/</url>
+        </snapshotRepository>
 	</distributionManagement>
 
 	 <scm>
-        <connection>scm:git:git://github.com/carava07/aqua-ai.git</connection>
-        <developerConnection>scm:git:https://github.com/carava07/aqua-ai.git
+        <connection>scm:git:ssh://github.com/carava07/aqua-ai.git</connection>
+        <developerConnection>scm:git:ssh://github.com/carava07/aqua-ai.git
         </developerConnection>
-        <url>https://github.com/carava07/aqua-ai/tree/master/aqua-admin</url>
+        <url>https://github.com/carava07/aqua-ai/</url>
         <tag>github-aqua-admin</tag>
     </scm>
 
 	 <build>
+	  <extensions>
+            <extension>
+                <groupId>org.apache.maven.wagon</groupId>
+                <artifactId>wagon-ssh</artifactId>
+                <version>2.4</version>
+            </extension>
+        </extensions>
         <pluginManagement>
             <plugins>
 
@@ -123,5 +135,5 @@
             </plugin>
         </plugins>
     </build>
-
+    
 </project>
