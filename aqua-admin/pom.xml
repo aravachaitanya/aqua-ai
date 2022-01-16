@@ -75,7 +75,7 @@
 		<repository>
 			<id>github</id>
 			<name>Chaitanya Arava</name>
-			<url>https://github.com/carava07/aqua-ai</url>
+			<url>https://github.com/carava07/aqua-ai/tree/master/aqua-admin</url>
 		</repository>
 	</distributionManagement>
 
