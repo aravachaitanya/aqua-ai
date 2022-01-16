@@ -1,8 +1,8 @@
 node {
-  stage(SCM checkout) {
+  stage('SCM Checkout') {
     git 'https://github.com/carava07/aqua-ai'
   }
-  stage(Compile-Package) {
+  stage('Compile-Package') {
     sh 'mvn package'
   }
 }
