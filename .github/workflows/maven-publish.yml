@@ -31,3 +31,8 @@ jobs:
 
     - name: List the current directory
       run: ls -a
+      
+    - name: Publish to GitHub Packages Apache Maven
+      run: mvn deploy --file /home/runner/work/aqua-ai/aqua-ai/
+      env:
+        GITHUB_TOKEN: ${{ github.token }}  
