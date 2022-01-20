@@ -3,7 +3,6 @@
  */
 package com.aquaadmin.customer.model;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -22,37 +21,32 @@ import lombok.NoArgsConstructor;
  * @author chaitanyaarava
  *
  */
-@Data
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 @Builder
-@Entity
-@Table(name="user_location")
-public class AquaLocation {
+@Table(name="aqua_login")
+public class AquaLogin {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="location_id")
-	private Long locationId;
+	@Column(name="user_id")
+	private Long userId;
 	
-	@Column(name="customer_id")
-	private Long customerId;
+	@Column(name="user_name")
+	private String userName;
 	
-	@Column(name="place")
-	private String place;
+	@Column(name="user_password")
+	private String userPassword;
 	
-	@Column(name="latitude")
-	private BigDecimal latitude;
+	@Column(name="user_status")
+	private boolean userStatus;
 	
-	@Column(name="longitude")
-	private BigDecimal longitude;
+	@Column(name="user_start_date")
+	private Date userStartDate;
 	
-	@Column(name="start_date")
-	private Date startDate;
-	
-	@Column(name="total_ponds")
-	private int totalPonds;
-	
-	@Column(name="status")
-	private String status;
+	@Column(name="user_end_date")
+	private Date userEndDate;
+
 }

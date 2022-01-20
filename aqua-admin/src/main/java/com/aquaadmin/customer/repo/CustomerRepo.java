@@ -13,6 +13,6 @@ import com.aquaadmin.customer.model.Customer;
  *
  */
 @Repository
-public interface AquaAdminRepo extends JpaRepository<Customer, Long> {
+public interface CustomerRepo extends JpaRepository<Customer, Long> {
 
 }

@@ -5,11 +5,15 @@ package com.aquaadmin.customer.service;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.aquaadmin.customer.model.AquaLocation;
+import com.aquaadmin.customer.model.AquaLogin;
 import com.aquaadmin.customer.model.Customer;
-import com.aquaadmin.customer.repo.AquaAdminRepo;
+import com.aquaadmin.customer.repo.AquaLocationRepo;
+import com.aquaadmin.customer.repo.AquaLoginRepo;
+import com.aquaadmin.customer.repo.CustomerRepo;
 
 /**
  * @author chaitanyaarava
@@ -18,33 +22,41 @@ import com.aquaadmin.customer.repo.AquaAdminRepo;
 @Service
 public class AquaAdminServiceImpl implements AquaAdminService {
 
-	private AquaAdminRepo aquaAdminRepo;
+	@Autowired
+	private CustomerRepo customerRepo;
 	
-	public AquaAdminServiceImpl(AquaAdminRepo aquaAdminRepo) {
-		this.aquaAdminRepo = aquaAdminRepo;
-	}
+	@Autowired
+	private AquaLoginRepo aquaLoginRepo;
+	
+	@Autowired
+	private AquaLocationRepo aquaLocationRepo;
 	
 	@Override
 	public Customer saveCustomer(Customer customer) {
-		Customer savedCustomer = aquaAdminRepo.save(customer);
+		Customer savedCustomer = customerRepo.save(customer);
 		
-		for(AquaLocation aquaLocation: savedCustomer.getAquaLocations())  {
-			aquaLocation.setCustomer(new Customer());
-			aquaLocation.getCustomer().setCustomerId(savedCustomer.getCustomerId());
-			aquaLocation.getCustomer().setCustomerType(savedCustomer.getCustomerType());
-			aquaLocation.getCustomer().setFullName(savedCustomer.getEmailId());
-			aquaLocation.getCustomer().setEmailId(savedCustomer.getEmailId());
-			aquaLocation.getCustomer().setPhoneNumber(savedCustomer.getPhoneNumber());
-		}
-		
-		Customer savedAquaCustomer = aquaAdminRepo.save(savedCustomer);
-		
-		return savedAquaCustomer;
+		return savedCustomer;
 	}
 
 	@Override
 	public Optional<Customer> getCustomerById(Long custId) {
-		Optional<Customer> customer = aquaAdminRepo.findById(custId);
+		Optional<Customer> customer = customerRepo.findById(custId);
 		return customer;
+	}
+
+	@Override
+	public AquaLogin saveAquaLoginDetails(AquaLogin aquaLogin) {
+
+		AquaLogin savedAquaLogin = aquaLoginRepo.save(aquaLogin);
+		
+		Customer customer = new Customer();
+		customer.setCustomerId(savedAquaLogin.getUserId());
+		customerRepo.save(customer);
+		
+		AquaLocation aquaLocation = new AquaLocation();
+		aquaLocation.setCustomerId(savedAquaLogin.getUserId());
+		aquaLocationRepo.save(aquaLocation);
+		
+		return savedAquaLogin;
 	}
 }

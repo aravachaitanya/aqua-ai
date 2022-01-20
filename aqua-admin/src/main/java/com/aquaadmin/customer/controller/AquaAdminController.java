@@ -11,6 +11,7 @@ import javax.validation.constraints.Min;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.aquaadmin.customer.exception.AquaAdminException;
 import com.aquaadmin.customer.exception.ErrorMessage;
+import com.aquaadmin.customer.model.AquaLogin;
 import com.aquaadmin.customer.model.Customer;
 import com.aquaadmin.customer.service.AquaAdminService;
 
@@ -39,12 +41,9 @@ public class AquaAdminController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(AquaAdminController.class);
 	
+	@Autowired
 	private AquaAdminService aquaAdminService;
 	
-	public AquaAdminController(AquaAdminService aquaAdminService) {
-		this.aquaAdminService = aquaAdminService;
-	}
-
 	/**
 	 * This method is to save customer data into user_admin and user_location tables.
 	 * 
@@ -100,4 +99,31 @@ public class AquaAdminController {
 		} else
 			return new ResponseEntity<Customer>(customer.get(), HttpStatus.OK);
 	} 
+	
+	/**
+	 * This method is to save Aqua login details into aqua_login table.
+	 * 
+	 * @param AquaLogin
+	 * @return
+	 * @throws AquaAdminException
+	 */
+	@PostMapping("/saveAquaLoginDetails")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Success", response = AquaLogin.class),
+			@ApiResponse(code = 400, message = "Bad Request", response = ErrorMessage.class),
+			@ApiResponse(code = 403, message = "Access Denied", response = ErrorMessage.class),
+			@ApiResponse(code = 404, message = "Customer Not Found", response = ErrorMessage.class),
+			@ApiResponse(code = 500, message = "Internel Server Error", response = ErrorMessage.class)
+	})
+	public ResponseEntity<AquaLogin> saveAquaLoginDetails(@Valid @RequestBody AquaLogin aquaLogin) throws AquaAdminException {
+		
+		LOGGER.info("Before saving AquaLogin");
+		
+		AquaLogin savedAquaLoginDetails = aquaAdminService.saveAquaLoginDetails(aquaLogin);
+		
+		LOGGER.info("Saved following credentials:: " + savedAquaLoginDetails.getUserId());
+		
+		
+		return new ResponseEntity<AquaLogin>(savedAquaLoginDetails, HttpStatus.CREATED);
+	}
 }
