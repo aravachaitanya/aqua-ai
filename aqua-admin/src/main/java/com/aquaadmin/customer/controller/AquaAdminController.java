@@ -3,8 +3,6 @@
  */
 package com.aquaadmin.customer.controller;
 
-import java.util.Optional;
-
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -23,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.aquaadmin.customer.exception.AquaAdminException;
+import com.aquaadmin.customer.exception.CustomerNotFoundException;
 import com.aquaadmin.customer.exception.ErrorMessage;
 import com.aquaadmin.customer.model.AquaLogin;
 import com.aquaadmin.customer.model.Customer;
@@ -93,11 +92,14 @@ public class AquaAdminController {
 			@PathVariable(value="customerId", required = true)
 			Long customerId) {
 
-		Optional<Customer> customer = aquaAdminService.getCustomerById(customerId);
-		if (!customer.isPresent()) {
-			return new ResponseEntity<Customer>(HttpStatus.NOT_FOUND);
+		Customer customer = aquaAdminService.getCustomerById(customerId);
+		if (customer == null) {
+			throw new CustomerNotFoundException(
+					  "customer not found", null
+					);
+
 		} else
-			return new ResponseEntity<Customer>(customer.get(), HttpStatus.OK);
+			return new ResponseEntity<Customer>(customer, HttpStatus.OK);
 	} 
 	
 	/**

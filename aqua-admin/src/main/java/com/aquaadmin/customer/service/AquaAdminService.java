@@ -3,8 +3,6 @@
  */
 package com.aquaadmin.customer.service;
 
-import java.util.Optional;
-
 import com.aquaadmin.customer.model.AquaLogin;
 import com.aquaadmin.customer.model.Customer;
 
@@ -27,7 +25,7 @@ public interface AquaAdminService {
 	 * @param custId
 	 * @return
 	 */
-	public Optional<Customer> getCustomerById(Long custId);
+	public Customer getCustomerById(Long custId);
 	
 	/**
 	 * This methos is to save aqua registration details in database.
