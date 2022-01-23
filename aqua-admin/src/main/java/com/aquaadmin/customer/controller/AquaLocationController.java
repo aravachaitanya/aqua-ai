@@ -1,0 +1,62 @@
+package com.aquaadmin.customer.controller;
+
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.aquaadmin.customer.exception.AquaAdminException;
+import com.aquaadmin.customer.exception.ErrorMessage;
+import com.aquaadmin.customer.model.AquaLocation;
+import com.aquaadmin.customer.service.AquaLocationService;
+
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
+/**
+ * @author chaitanyaarava
+ *
+ */
+@RestController
+@Validated
+public class AquaLocationController {
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(AquaLocationController.class);
+
+	@Autowired
+	private AquaLocationService aquaLocationService;
+
+	/**
+	 * 
+	 * @param customer
+	 * @return
+	 * @throws AquaAdminException
+	 */
+	@PostMapping("/saveLocation/{customerId}")
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "Success", response = AquaLocation.class),
+			@ApiResponse(code = 400, message = "Bad Request", response = ErrorMessage.class),
+			@ApiResponse(code = 403, message = "Access Denied", response = ErrorMessage.class),
+			@ApiResponse(code = 404, message = "Customer Not Found", response = ErrorMessage.class),
+			@ApiResponse(code = 500, message = "Internel Server Error", response = ErrorMessage.class) })
+	public ResponseEntity<AquaLocation> saveCustomer(@PathVariable("customerId") @Valid @Min(value = 1) Long customerId,
+			@Valid @RequestBody AquaLocation aquaLocation) throws AquaAdminException {
+
+		LOGGER.info("Before saving aquaLocation");
+
+		AquaLocation savedAquaLocation = aquaLocationService.saveAquaLocation(aquaLocation);
+
+		LOGGER.info("Saved following customer:: " + savedAquaLocation.getLocationId());
+
+		return new ResponseEntity<AquaLocation>(savedAquaLocation, HttpStatus.CREATED);
+	}
+
+}

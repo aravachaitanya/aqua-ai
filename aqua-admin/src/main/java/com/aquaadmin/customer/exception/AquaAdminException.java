@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.aquaadmin.customer.exception;
 
 import org.springframework.http.HttpStatus;

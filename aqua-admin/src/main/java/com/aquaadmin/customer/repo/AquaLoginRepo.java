@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.aquaadmin.customer.repo;
 
 import org.springframework.data.jpa.repository.JpaRepository;

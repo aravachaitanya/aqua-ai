@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.aquaadmin.customer.config;
 
 import org.springframework.context.annotation.Bean;
