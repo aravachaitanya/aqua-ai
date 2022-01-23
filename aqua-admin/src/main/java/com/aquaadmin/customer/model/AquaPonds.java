@@ -1,18 +1,14 @@
 package com.aquaadmin.customer.model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -32,40 +28,42 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name="user_location")
-public class AquaLocation implements Serializable{
-	
+@Table(name="user_ponds")
+public class AquaPonds implements Serializable{
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="location_id")
-	private Long locationId;
+	@Column(name="pond_id")
+	private Long pondId;
 	
 	@Column(name="customer_id")
 	private Long customerId;
 	
-	@Column(name="place")
-	private String place;
+	@Column(name="locationid")
+	private Long locationId;
 	
-	@Column(name="latitude")
-	private BigDecimal latitude;
+	@Column(name="pond_number")
+	private String pondNumber;
 	
-	@Column(name="longitude")
-	private BigDecimal longitude;
+	@Column(name="pond_size")
+	private Long pondSize;
 	
-	@Column(name="start_date")
-	private Date startDate;
+	@Column(name="unit_of_measure")
+	private String unitOfMeasure;
 	
-	@Column(name="total_ponds")
-	private int totalPonds;
+	@Column(name="feeding_type")
+	private String feedingType;
 	
 	@Column(name="status")
-	private String status;
+	private boolean status;
 	
-	@OneToMany(mappedBy = "aquaLocation", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private Set<AquaPonds> aquaPonds;
+	@ManyToOne
+	@JoinColumn(name = "location_id")
+	private AquaLocation aquaLocation;
+
 }
