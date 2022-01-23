@@ -5,11 +5,14 @@ package com.aquaadmin.customer.model;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -30,10 +33,8 @@ import lombok.NoArgsConstructor;
 public class Customer {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-	
-	@Column(name="customer_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="customer_id", unique = true)
 	private Long customerId;
 
 	@Column(name="customer_name")
@@ -59,4 +60,7 @@ public class Customer {
 	
 	@Column(name="location_numbers")
 	private int locationNumbers;
+	
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL)
+	private AquaLogin aquaLogin;
 }

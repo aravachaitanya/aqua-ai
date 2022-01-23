@@ -5,6 +5,8 @@ package com.aquaadmin.customer.service;
 
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,10 +33,12 @@ public class AquaAdminServiceImpl implements AquaAdminService {
 	@Autowired
 	private AquaLocationRepo aquaLocationRepo;
 	
+	@Transactional
 	@Override
 	public Customer saveCustomer(Customer customer) {
+
 		Customer savedCustomer = customerRepo.save(customer);
-		
+
 		return savedCustomer;
 	}
 
