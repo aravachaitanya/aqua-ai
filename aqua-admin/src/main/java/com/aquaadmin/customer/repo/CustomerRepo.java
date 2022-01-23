@@ -15,4 +15,5 @@ import com.aquaadmin.customer.model.Customer;
 @Repository
 public interface CustomerRepo extends JpaRepository<Customer, Long> {
 
+	public Customer findByCustomerId(Long id);
 }

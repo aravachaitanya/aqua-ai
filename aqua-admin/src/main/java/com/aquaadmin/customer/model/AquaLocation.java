@@ -31,7 +31,7 @@ import lombok.NoArgsConstructor;
 public class AquaLocation {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="location_id")
 	private Long locationId;
 	

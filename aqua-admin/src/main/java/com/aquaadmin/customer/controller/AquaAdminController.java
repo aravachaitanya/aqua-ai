@@ -51,7 +51,7 @@ public class AquaAdminController {
 	 * @return
 	 * @throws AquaAdminException
 	 */
-	@PostMapping
+	@PostMapping("/saveCustomer")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Success", response = Customer.class),
 			@ApiResponse(code = 400, message = "Bad Request", response = ErrorMessage.class),
