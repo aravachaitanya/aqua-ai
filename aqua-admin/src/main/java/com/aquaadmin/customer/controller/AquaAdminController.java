@@ -91,7 +91,7 @@ public class AquaAdminController {
 		Customer customer = aquaAdminService.getCustomerById(customerId);
 		if (customer == null) {
 			throw new CustomerNotFoundException(
-					  "customer not found", null
+					  "customerId not found: "+customerId, null
 					);
 
 		} else
