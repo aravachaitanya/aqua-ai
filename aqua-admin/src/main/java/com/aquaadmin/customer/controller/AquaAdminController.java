@@ -133,7 +133,8 @@ public class AquaAdminController {
 	 */
 	private void encryptPassword(Customer customer) {
 
-		if (customer.getAquaLogin() != null && !customer.getAquaLogin().getUserPassword().isBlank()) {
+		if (customer.getAquaLogin() != null && customer.getAquaLogin().getUserPassword() != null
+				&& customer.getAquaLogin().getUserPassword().length() > 0) {
 			String userpwd = customer.getAquaLogin().getUserPassword();
 			String encryptedUserPassword = bCryptPasswordEncoder.encode(userpwd);
 			customer.getAquaLogin().setUserPassword(encryptedUserPassword);
