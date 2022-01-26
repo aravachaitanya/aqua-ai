@@ -23,4 +23,12 @@ public interface AquaAdminService {
 	 */
 	public Customer getCustomerById(Long custId);
 	
+	/**
+	 * This methos check if customer exists in database.
+	 * @param userName
+	 * @param password
+	 * @return
+	 */
+	public boolean isAquaCustomerExists(String userName, String password);
+	
 }

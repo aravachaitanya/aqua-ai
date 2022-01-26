@@ -5,10 +5,12 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.aquaadmin.customer.model.AquaLogin;
 import com.aquaadmin.customer.model.Customer;
+import com.aquaadmin.customer.repo.AquaLoginRepo;
 import com.aquaadmin.customer.repo.CustomerRepo;
 
 /**
@@ -20,6 +22,12 @@ public class AquaAdminServiceImpl implements AquaAdminService {
 
 	@Autowired
 	private CustomerRepo customerRepo;
+	
+	@Autowired
+	private AquaLoginRepo aquaLoginRepo;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@Transactional
 	@Override
@@ -56,6 +64,16 @@ public class AquaAdminServiceImpl implements AquaAdminService {
 		}
 		
 		return customer;
+	}
+
+	@Override
+	public boolean isAquaCustomerExists(String userName, String password) {
+
+		AquaLogin findAquaLoginCustomer = aquaLoginRepo.findByUserNameAndUserPassword(userName, password);
+		
+		boolean isPasswordMatched = passwordEncoder.matches(password, findAquaLoginCustomer.getUserPassword());
+		
+		return isPasswordMatched;
 	}
 
 }
