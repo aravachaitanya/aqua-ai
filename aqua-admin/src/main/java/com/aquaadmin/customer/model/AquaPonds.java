@@ -49,7 +49,7 @@ public class AquaPonds implements Serializable{
 	private String pondNumber;
 	
 	@Column(name="pond_size")
-	private Long pondSize;
+	private double pondSize;
 	
 	@Column(name="unit_of_measure")
 	private String unitOfMeasure;
