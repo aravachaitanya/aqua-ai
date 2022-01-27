@@ -70,7 +70,7 @@ public class AquaAdminController {
 		LOGGER.info("Saved following customer:: " + savedCustomer.getCustomerId());
 		
 		
-		return new ResponseEntity<Customer>(customer, HttpStatus.CREATED);
+		return new ResponseEntity<Customer>(savedCustomer, HttpStatus.CREATED);
 	}
 	
 	/**

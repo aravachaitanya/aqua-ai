@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
@@ -44,9 +45,6 @@ public class AquaPonds implements Serializable{
 	@Column(name="customer_id")
 	private Long customerId;
 	
-	@Column(name="locationid")
-	private Long locationId;
-	
 	@Column(name="pond_number")
 	private String pondNumber;
 	
@@ -64,6 +62,7 @@ public class AquaPonds implements Serializable{
 	
 	@ManyToOne
 	@JoinColumn(name = "location_id")
+	@JsonIgnore
 	private AquaLocation aquaLocation;
 
 }
