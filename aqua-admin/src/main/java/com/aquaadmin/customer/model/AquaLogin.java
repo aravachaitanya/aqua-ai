@@ -58,7 +58,7 @@ public class AquaLogin implements Serializable{
 	private Date userEndDate;
 
 	@OneToOne
-	@JoinColumn(name = "customer_id")
+	@JoinColumn(name="customer_id")
 	@JsonIgnore
 	private Customer customer;
 
