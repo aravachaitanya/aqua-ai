@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,6 +35,7 @@ import io.swagger.annotations.ApiResponses;
  */
 @RestController
 @Validated
+@CrossOrigin("*")
 public class AquaAdminController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(AquaAdminController.class);
