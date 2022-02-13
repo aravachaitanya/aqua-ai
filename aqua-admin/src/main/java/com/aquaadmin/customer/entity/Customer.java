@@ -1,4 +1,4 @@
-package com.aquaadmin.customer.model;
+package com.aquaadmin.customer.entity;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -55,17 +55,8 @@ public class Customer implements Serializable {
 	@Column(name="customer_type")
 	private String customerType;
 	
-	@Column(name="active_user_count")
-	private int activeLoginCount;
-	
-	@Column(name="total_ponds")
-	private int totalPonds;
-	
 	@Column(name="start_date")
 	private Date startDate; 
-	
-	@Column(name="location_numbers")
-	private int locationNumbers;
 	
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.ALL)
 	private AquaLogin aquaLogin;

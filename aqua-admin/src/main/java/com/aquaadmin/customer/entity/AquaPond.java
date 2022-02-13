@@ -1,4 +1,4 @@
-package com.aquaadmin.customer.model;
+package com.aquaadmin.customer.entity;
 
 import java.io.Serializable;
 
@@ -30,7 +30,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity
 @Table(name="user_ponds")
-public class AquaPonds implements Serializable{
+public class AquaPond implements Serializable{
 
 	/**
 	 * 

@@ -5,7 +5,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.aquaadmin.customer.model.AquaLocation;
+import com.aquaadmin.customer.entity.AquaLocation;
 import com.aquaadmin.customer.repo.AquaLocationRepo;
 
 /**

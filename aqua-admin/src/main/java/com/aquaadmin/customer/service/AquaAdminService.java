@@ -1,6 +1,6 @@
 package com.aquaadmin.customer.service;
 
-import com.aquaadmin.customer.model.Customer;
+import com.aquaadmin.customer.entity.Customer;
 
 /**
  * @author chaitanyaarava
@@ -31,4 +31,12 @@ public interface AquaAdminService {
 	 */
 	public boolean isAquaCustomerExists(String userName, String password);
 	
+	
+	/**
+	 * This methos is to fetch customer details from database.
+	 * @param userName
+	 * @param password
+	 * @return
+	 */
+	public Customer getCustomerByIdUserNameAndPassword(String userName, String password);
 }

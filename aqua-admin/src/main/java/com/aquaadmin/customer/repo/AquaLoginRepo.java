@@ -4,7 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.aquaadmin.customer.model.AquaLogin;
+import com.aquaadmin.customer.entity.AquaLogin;
 
 /**
  * @author chaitanyaarava

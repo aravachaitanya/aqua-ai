@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.aquaadmin.customer.model.AquaLogin;
-import com.aquaadmin.customer.model.Customer;
+import com.aquaadmin.customer.entity.AquaLogin;
+import com.aquaadmin.customer.entity.Customer;
 import com.aquaadmin.customer.repo.AquaLoginRepo;
 import com.aquaadmin.customer.repo.CustomerRepo;
 
@@ -61,6 +61,7 @@ public class AquaAdminServiceImpl implements AquaAdminService {
 			customer.setFullName(savedCustomer.get().getFullName());
 			customer.setPhoneNumber(savedCustomer.get().getPhoneNumber());
 			customer.setStartDate(savedCustomer.get().getStartDate());
+			customer.setAquaLogin(savedCustomer.get().getAquaLogin());
 		}
 		
 		return customer;
@@ -71,9 +72,27 @@ public class AquaAdminServiceImpl implements AquaAdminService {
 
 		AquaLogin findAquaLoginCustomer = aquaLoginRepo.findByUserNameAndUserPassword(userName, password);
 		
-		boolean isPasswordMatched = passwordEncoder.matches(password, findAquaLoginCustomer.getUserPassword());
+		boolean isPasswordMatched = false;
+		
+		if(findAquaLoginCustomer != null && findAquaLoginCustomer.getUserPassword() != null ) {
+			isPasswordMatched = passwordEncoder.matches(password, findAquaLoginCustomer.getUserPassword());
+		}
 		
 		return isPasswordMatched;
+	}
+
+	@Override
+	public Customer getCustomerByIdUserNameAndPassword(String userName, String password) {
+
+		AquaLogin findAquaLoginCustomer = aquaLoginRepo.findByUserNameAndUserPassword(userName, password);
+
+		Customer customer = null;
+
+		if (findAquaLoginCustomer !=  null && findAquaLoginCustomer.getCustomer() != null) {
+			customer = findAquaLoginCustomer.getCustomer();
+		}
+
+		return customer;
 	}
 
 }

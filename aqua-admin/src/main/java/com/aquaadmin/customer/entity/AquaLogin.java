@@ -1,4 +1,4 @@
-package com.aquaadmin.customer.model;
+package com.aquaadmin.customer.entity;
 
 import java.io.Serializable;
 import java.util.Date;
