@@ -1,6 +1,6 @@
 package com.aquaadmin.customer.service;
 
-import com.aquaadmin.customer.model.AquaLocation;
+import com.aquaadmin.customer.entity.AquaLocation;
 
 /**
  * @author chaitanyaarava

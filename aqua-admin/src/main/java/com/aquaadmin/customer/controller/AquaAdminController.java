@@ -3,7 +3,6 @@ package com.aquaadmin.customer.controller;
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.Size;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,10 +19,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.aquaadmin.customer.entity.AquaLogin;
+import com.aquaadmin.customer.entity.Customer;
 import com.aquaadmin.customer.exception.AquaAdminException;
 import com.aquaadmin.customer.exception.CustomerNotFoundException;
 import com.aquaadmin.customer.exception.ErrorMessage;
-import com.aquaadmin.customer.model.Customer;
+import com.aquaadmin.customer.model.AquaCustomer;
+import com.aquaadmin.customer.model.AquaCustomerLogin;
+import com.aquaadmin.customer.model.AquaUser;
 import com.aquaadmin.customer.service.AquaAdminService;
 
 import io.swagger.annotations.ApiResponse;
@@ -35,7 +38,7 @@ import io.swagger.annotations.ApiResponses;
  */
 @RestController
 @Validated
-@CrossOrigin("*")
+@CrossOrigin(origins = "http://localhost:3000")
 public class AquaAdminController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(AquaAdminController.class);
@@ -49,7 +52,7 @@ public class AquaAdminController {
 	/**
 	 * This method is to save customer data into user_admin and user_location tables.
 	 * 
-	 * @param customer
+	 * @param aquaCustomer
 	 * @return
 	 * @throws AquaAdminException
 	 */
@@ -61,11 +64,13 @@ public class AquaAdminController {
 			@ApiResponse(code = 404, message = "Customer Not Found", response = ErrorMessage.class),
 			@ApiResponse(code = 500, message = "Internel Server Error", response = ErrorMessage.class)
 	})
-	public ResponseEntity<Customer> saveCustomer(@Valid @RequestBody Customer customer) throws AquaAdminException {
+	public ResponseEntity<Customer> saveCustomer(@Valid @RequestBody AquaCustomer aquaCustomer) throws AquaAdminException {
 		
 		LOGGER.info("Before saving customer");
 		
-		encryptPassword(customer);
+		encryptPassword(aquaCustomer);
+		
+		Customer customer = mapCustomer(aquaCustomer);
 		
 		Customer savedCustomer = aquaAdminService.saveCustomer(customer);
 		
@@ -73,6 +78,33 @@ public class AquaAdminController {
 		
 		
 		return new ResponseEntity<Customer>(savedCustomer, HttpStatus.CREATED);
+	}
+
+	/**
+	 * @param aquaCustomer
+	 * @return
+	 */
+	private Customer mapCustomer(AquaCustomer aquaCustomer) {
+		Customer customer = new Customer();
+		customer.setFullName(aquaCustomer.getFullName());
+		customer.setCustomerType(aquaCustomer.getCustomerType());
+		customer.setEmailId(aquaCustomer.getEmailId());
+		customer.setPhoneNumber(aquaCustomer.getPhoneNumber());
+		customer.setStartDate(aquaCustomer.getStartDate());
+		
+		AquaLogin aquaLogin = new AquaLogin();
+		
+		AquaCustomerLogin aquaCustomerLogin = aquaCustomer.getAquaCustomerLogin();
+		
+		aquaLogin.setUserName(aquaCustomerLogin.getUserName());
+		aquaLogin.setUserPassword(aquaCustomerLogin.getUserPassword());
+		aquaLogin.setUserStartDate(aquaCustomerLogin.getUserStartDate());
+		aquaLogin.setUserEndDate(aquaCustomerLogin.getUserEndDate());
+		aquaLogin.setUserStatus(true);
+		
+		customer.setAquaLogin(aquaLogin);
+		
+		return customer;
 	}
 	
 	/**
@@ -112,7 +144,7 @@ public class AquaAdminController {
 	 * @param password
 	 * @return
 	 */
-	@GetMapping(value = "/customer/{userName}/{password}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PostMapping("/isUserExists")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Success", response = Boolean.class),
 			@ApiResponse(code = 400, message = "Bad Request", response = ErrorMessage.class),
@@ -120,26 +152,51 @@ public class AquaAdminController {
 			@ApiResponse(code = 404, message = "Customer Not Found", response = ErrorMessage.class),
 			@ApiResponse(code = 500, message = "Internel Server Error", response = ErrorMessage.class)
 	})
-	public boolean isAquaUserExists(
-			@Valid @Size(min= 5, max=20, message = "aqua username is inValid") @PathVariable(value = "userName", required = true) String userName,
-			@Valid @Size(min= 5, max=12, message = "aqua user password is inValid") @PathVariable(value = "password", required = true) String password) {
+	public boolean isAquaUserExists(@RequestBody AquaUser aquaUser) {
 
-		boolean aquaUserExists = aquaAdminService.isAquaCustomerExists(userName, password);
+		boolean aquaUserExists = aquaAdminService.isAquaCustomerExists(aquaUser.getUserName(), aquaUser.getUserPassword());
 		return aquaUserExists;
+	}
+	
+	/**
+	 * This methos will check for login credentials for aqua customer.
+	 * 
+	 * @param userName
+	 * @param password
+	 * @return
+	 */
+	@PostMapping("/customerByUser")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Success", response = Customer.class),
+			@ApiResponse(code = 400, message = "Bad Request", response = ErrorMessage.class),
+			@ApiResponse(code = 403, message = "Access Denied", response = ErrorMessage.class),
+			@ApiResponse(code = 404, message = "Customer Not Found", response = ErrorMessage.class),
+			@ApiResponse(code = 500, message = "Internel Server Error", response = ErrorMessage.class)
+	})
+	public ResponseEntity<Customer> getAquaCustomer(@RequestBody AquaUser aquaUser) {
+
+		Customer aquaCustomer = aquaAdminService.getCustomerByIdUserNameAndPassword(aquaUser.getUserName(), aquaUser.getUserPassword());
+		if (aquaCustomer == null) {
+			throw new CustomerNotFoundException(
+					  "customer Name not found: "+aquaUser.getUserName(), null
+					);
+
+		} else
+			return new ResponseEntity<Customer>(aquaCustomer, HttpStatus.OK);
 	}
 
 
 
 	/**
-	 * @param customer
+	 * @param aquaCustomer
 	 */
-	private void encryptPassword(Customer customer) {
+	private void encryptPassword(AquaCustomer aquaCustomer) {
 
-		if (customer.getAquaLogin() != null && customer.getAquaLogin().getUserPassword() != null
-				&& customer.getAquaLogin().getUserPassword().length() > 0) {
-			String userpwd = customer.getAquaLogin().getUserPassword();
+		if (aquaCustomer.getAquaCustomerLogin() != null && aquaCustomer.getAquaCustomerLogin().getUserPassword() != null
+				&& aquaCustomer.getAquaCustomerLogin().getUserPassword().length() > 0) {
+			String userpwd = aquaCustomer.getAquaCustomerLogin().getUserPassword();
 			String encryptedUserPassword = bCryptPasswordEncoder.encode(userpwd);
-			customer.getAquaLogin().setUserPassword(encryptedUserPassword);
+			aquaCustomer.getAquaCustomerLogin().setUserPassword(encryptedUserPassword);
 		}
 
 	}

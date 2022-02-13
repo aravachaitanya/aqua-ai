@@ -1,4 +1,4 @@
-package com.aquaadmin.customer.model;
+package com.aquaadmin.customer.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -69,5 +69,5 @@ public class AquaLocation implements Serializable{
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "location_id")
-	private Set<AquaPonds> aquaPonds;
+	private Set<AquaPond> aquaPonds;
 }
